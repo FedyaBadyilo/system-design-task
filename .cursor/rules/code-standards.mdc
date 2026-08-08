@@ -1,0 +1,190 @@
+---
+description: General code standards for implementation work. Apply when adding or changing application, service, model, pipeline, integration, or test code.
+---
+
+# Code Standards
+
+The task statement and user instructions are the primary source of requirements.
+
+Keep the implementation proportional to the task. Prefer the simplest solution that demonstrates the required behavior and can be explained, tested, and modified quickly.
+
+## Data Contracts
+
+Use explicit structured contracts when data crosses meaningful boundaries.
+
+Prefer Pydantic models for structured request, response, configuration, or intermediate data when validation is useful.
+
+After successful validation, trust the schema:
+
+- use direct field access for required fields;
+- do not repeatedly re-check types already guaranteed by the model;
+- use optional checks only for genuinely optional values;
+- validate raw external data at the boundary rather than scattering checks throughout the code.
+
+Do not introduce extra schema systems, DTO layers, dataclasses, TypedDicts, or custom validation frameworks unless the task benefits from them.
+
+## Error Handling
+
+Fail clearly and close to the source of the problem.
+
+Avoid:
+
+- bare `except`;
+- broad `except Exception` that hides failures;
+- silent skipping of malformed data;
+- fake fallback results that look successful;
+- swallowing errors only to continue with an invalid state.
+
+Handle expected external failures explicitly when the task requires resilient behavior.
+
+Do not add retries, fallbacks, queues, circuit breakers, or degradation logic unless they solve a concrete requirement.
+
+## Architecture Budget
+
+Before adding a new:
+
+- class;
+- abstraction layer;
+- dependency;
+- service;
+- queue;
+- cache;
+- database;
+- persistence format;
+- background worker;
+- configuration layer;
+
+ask whether it materially improves the required solution.
+
+Default to:
+
+```text
+simple function
++ explicit contract
++ focused module
++ small test
+```
+
+Add complexity only when there is a clear responsibility or requirement behind it.
+
+## Separation of Responsibilities
+
+Keep distinct responsibilities separate when combining them would make the code harder to understand or test.
+
+Typical boundaries include:
+
+- input/output handling;
+- validation;
+- domain or decision logic;
+- model inference;
+- external API calls;
+- persistence;
+- orchestration;
+- metrics and evaluation.
+
+Do not create a separate module for every tiny function. Separation should improve clarity, not maximize file count.
+
+## External Dependencies
+
+Keep external integrations replaceable when practical.
+
+Examples:
+
+- model provider;
+- external API;
+- database;
+- message broker;
+- storage;
+- third-party service.
+
+Use a thin adapter or interface when it makes mocking, testing, or replacement easier.
+
+Do not mock components merely because they are external. Follow the task requirements and available environment. Clearly distinguish real integrations from mocks or stubs.
+
+Never present mocked behavior as evidence that the real external component works.
+
+## Configuration and Secrets
+
+Do not hardcode secrets, tokens, passwords, or environment-specific credentials.
+
+Prefer environment variables and `.env.example` for values that differ between environments.
+
+Keep configuration minimal. Do not introduce a configuration framework when a few explicit settings are enough.
+
+## Dependencies
+
+Add only dependencies that are actually used.
+
+Prefer standard library or already-installed project dependencies when they are sufficient.
+
+Do not add a framework solely because it is common for the problem domain.
+
+Remove unused imports and dependencies before considering the implementation complete.
+
+## Tests
+
+Tests should protect meaningful behavior, not maximize coverage.
+
+Prioritize:
+
+1. non-trivial deterministic domain logic;
+2. important data contracts;
+3. critical decision branches;
+4. regression cases for discovered bugs;
+5. one small smoke or integration test when useful.
+
+Prefer small deterministic fixtures.
+
+Avoid slow or flaky tests that depend on real external services unless the task explicitly requires live integration testing.
+
+When external dependencies are not the subject of the test, mock or stub them at the integration boundary.
+
+## Implementation Honesty
+
+Clearly distinguish:
+
+- implemented behavior;
+- mocked or stubbed behavior;
+- design-only components;
+- assumptions;
+- unvalidated claims.
+
+Do not claim:
+
+- model quality without evaluation data;
+- scalability without relevant testing or analysis;
+- reliability guarantees without implementation or evidence;
+- successful integration with a service that was not actually called.
+
+## Code Quality
+
+Prefer:
+
+- clear names;
+- short focused functions;
+- explicit control flow;
+- minimal hidden state;
+- type hints where they improve understanding;
+- comments that explain non-obvious reasoning rather than restating code.
+
+Avoid:
+
+- speculative abstractions;
+- premature generalization;
+- large utility modules with unrelated helpers;
+- duplicated validation;
+- dead code;
+- placeholder production complexity;
+- unnecessary wrappers around library APIs.
+
+## Completion Check
+
+Before finishing implementation:
+
+- the required behavior works end-to-end at the level requested by the task;
+- the code can be run using documented commands;
+- important paths are covered by small tests or reproducible checks;
+- mocks and design-only components are clearly identified;
+- dependencies and configuration are minimal;
+- no secrets or environment-specific internal endpoints are committed;
+- the implementation does not claim capabilities that were not validated.
