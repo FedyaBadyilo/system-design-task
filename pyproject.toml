@@ -1,0 +1,13 @@
+[project]
+name = "system-design-task"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
