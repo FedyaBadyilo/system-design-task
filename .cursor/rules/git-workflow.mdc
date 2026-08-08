@@ -1,0 +1,77 @@
+---
+description: Git workflow for small, reviewable, logically grouped commits. Apply when staging or committing changes.
+alwaysApply: false
+---
+
+# Git Workflow
+
+Keep Git history useful for understanding how the solution was built.
+
+## Principles
+
+- Commit by completed logical change, not by elapsed time or arbitrary file groups.
+- Do not mix unrelated changes in one commit when they can be separated safely.
+- Do not split one coherent change into meaningless micro-commits.
+- Prefer commits that leave the repository in a runnable or at least internally consistent state.
+- Review the diff before committing.
+- Do not commit secrets, local credentials, generated caches, temporary artifacts, or unrelated workspace changes.
+- Do not rewrite existing history unless explicitly requested.
+
+## Commit Messages
+
+Use short imperative-style messages with a conventional prefix when it fits:
+
+```text
+feat: add low-confidence routing
+fix: handle invalid prediction input
+test: cover decision policy branches
+docs: document local run flow
+refactor: separate model adapter from orchestration
+chore: update project configuration
+```
+
+Prefer:
+
+```text
+<type>: <concise completed change>
+```
+
+Avoid vague messages such as:
+
+```text
+update
+fix
+fix2
+changes
+final
+wip
+```
+
+## Logical Grouping
+
+A commit should answer one clear question:
+
+> What meaningful change does this commit introduce?
+
+Examples of useful boundaries:
+
+- introduce a working inference path;
+- add a decision rule or fallback;
+- add tests for an already implemented behavior;
+- update documentation to match the implementation;
+- fix a specific defect;
+- refactor without changing behavior.
+
+When the working tree contains several independent changes, stage and commit them separately.
+
+## Before Each Commit
+
+1. Inspect `git status`.
+2. Inspect relevant diffs.
+3. Identify logical groups.
+4. Run the smallest relevant validation when practical.
+5. Stage only files or hunks belonging to the current logical group.
+6. Commit with a descriptive message.
+7. Re-check `git status`.
+
+If changes cannot be separated safely because they form one coherent implementation, keep them in one commit rather than forcing artificial separation.
