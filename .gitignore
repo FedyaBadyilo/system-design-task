@@ -28,3 +28,6 @@ htmlcov/
 # Logs
 *.log
 logs/
+
+# Local PoC runtime data
+.data/
