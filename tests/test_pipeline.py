@@ -106,6 +106,12 @@ def test_happy_path_redacts_pii_retrieves_and_audits(tmp_path: Path) -> None:
             None,
             ReasonCode.LOW_CONFIDENCE,
         ),
+        (
+            "event-payment-wording",
+            "После списания средств не приходят push-уведомления.",
+            None,
+            ReasonCode.RISK_KEYWORD,
+        ),
     ],
 )
 def test_risky_or_uncertain_ticket_never_calls_generator(
@@ -133,6 +139,32 @@ def test_risky_or_uncertain_ticket_never_calls_generator(
     assert outcome.reason_code is expected_reason
     assert outcome.response is None
     assert outcome.route is not None
+    assert "RETRIEVAL" not in traced_stages
+    assert "GENERATION" not in traced_stages
+
+
+def test_unsupported_locale_routes_to_human_without_generation(
+    tmp_path: Path,
+) -> None:
+    traced_stages: list[str] = []
+    pipeline = _pipeline(
+        tmp_path,
+        UnexpectedGenerator(),
+        trace=lambda stage, message: traced_stages.append(stage),
+    )
+
+    outcome = pipeline.process_ticket(
+        _ticket(
+            event_id="event-unsupported-locale",
+            text="Push notifications are not working.",
+            locale="en-US",
+        )
+    )
+
+    assert outcome.action is Action.HUMAN_REVIEW
+    assert outcome.reason_code is ReasonCode.UNSUPPORTED_LOCALE
+    assert outcome.response is None
+    assert outcome.route == "general-human-review"
     assert "RETRIEVAL" not in traced_stages
     assert "GENERATION" not in traced_stages
 
@@ -203,6 +235,7 @@ def _ticket(
     event_id: str,
     text: str,
     selected_topic: TopicCode | None = None,
+    locale: str = "ru-RU",
 ) -> Ticket:
     return Ticket(
         event_id=event_id,
@@ -211,4 +244,5 @@ def _ticket(
         created_at=datetime(2026, 8, 9, 12, 0, tzinfo=timezone.utc),
         selected_topic=selected_topic,
         messages=[Message(text=text)],
+        locale=locale,
     )

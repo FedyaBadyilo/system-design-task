@@ -61,7 +61,16 @@ _RISK_TOPICS = {
 _RISK_KEYWORDS: tuple[tuple[TopicCode, tuple[str, ...]], ...] = (
     (
         TopicCode.PAYMENTS,
-        ("оплат", "платеж", "деньг", "возврат", "списал", "банк", "карт"),
+        (
+            "оплат",
+            "платеж",
+            "деньг",
+            "возврат",
+            "списал",
+            "списан",
+            "банк",
+            "карт",
+        ),
     ),
     (
         TopicCode.ACCOUNT_SECURITY,

@@ -86,6 +86,27 @@ class TicketPipeline:
             return self._replay_fast_decision(ticket.event_id)
         self._trace("AUDIT", f"создан processing run {run_id}")
 
+        if ticket.locale != "ru-RU":
+            self.audit.append_decision(
+                run_id=run_id,
+                stage="fast_path",
+                action=Action.HUMAN_REVIEW,
+                reason_code=ReasonCode.UNSUPPORTED_LOCALE,
+            )
+            self._trace(
+                "DECISION",
+                f"{Action.HUMAN_REVIEW.value}: "
+                f"{ReasonCode.UNSUPPORTED_LOCALE.value}; "
+                "retrieval и генерация не запускались",
+            )
+            return FastDecision(
+                run_id=run_id,
+                ticket_id=ticket.ticket_id,
+                action=Action.HUMAN_REVIEW,
+                reason_code=ReasonCode.UNSUPPORTED_LOCALE,
+                risk_level=RiskLevel.UNKNOWN,
+            )
+
         risk = assess_risk(
             sanitization.text,
             selected_topic=ticket.selected_topic,
