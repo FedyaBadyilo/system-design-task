@@ -184,21 +184,8 @@ class TicketPipeline:
         topic_code = job.predictions[0].topic_code if job.predictions else None
         if not articles:
             self._trace("RETRIEVAL", "подходящие статьи выше порога не найдены")
-            self.audit.append_decision(
-                run_id=job.run_id,
-                stage="generation",
-                action=Action.HUMAN_REVIEW,
-                reason_code=ReasonCode.RETRIEVAL_LOW_CONFIDENCE,
-                attempt=job.attempt,
-            )
-            self._trace(
-                "DECISION",
-                f"{Action.HUMAN_REVIEW.value}: "
-                f"{ReasonCode.RETRIEVAL_LOW_CONFIDENCE.value}",
-            )
-            return _human_outcome(
-                run_id=job.run_id,
-                ticket_id=job.ticket_id,
+            return self._generation_fallback(
+                job=job,
                 reason_code=ReasonCode.RETRIEVAL_LOW_CONFIDENCE,
                 risk_level=RiskLevel.UNKNOWN,
                 topic_code=topic_code,
@@ -217,41 +204,16 @@ class TicketPipeline:
             validate_generation_output(output, articles)
         except GenerationUnavailable:
             self._trace("GENERATION", "зависимость недоступна")
-            self.audit.append_decision(
-                run_id=job.run_id,
-                stage="generation",
-                action=Action.HUMAN_REVIEW,
-                reason_code=ReasonCode.DEPENDENCY_FAILURE,
-                attempt=job.attempt,
-            )
-            self._trace(
-                "DECISION",
-                f"{Action.HUMAN_REVIEW.value}: {ReasonCode.DEPENDENCY_FAILURE.value}",
-            )
-            return _human_outcome(
-                run_id=job.run_id,
-                ticket_id=job.ticket_id,
+            return self._generation_fallback(
+                job=job,
                 reason_code=ReasonCode.DEPENDENCY_FAILURE,
                 risk_level=RiskLevel.LOW,
                 topic_code=topic_code,
             )
         except GenerationResponseInvalid:
             self._trace("GENERATION", "ответ не прошёл детерминированные проверки")
-            self.audit.append_decision(
-                run_id=job.run_id,
-                stage="generation",
-                action=Action.HUMAN_REVIEW,
-                reason_code=ReasonCode.RESPONSE_VALIDATION_FAILED,
-                attempt=job.attempt,
-            )
-            self._trace(
-                "DECISION",
-                f"{Action.HUMAN_REVIEW.value}: "
-                f"{ReasonCode.RESPONSE_VALIDATION_FAILED.value}",
-            )
-            return _human_outcome(
-                run_id=job.run_id,
-                ticket_id=job.ticket_id,
+            return self._generation_fallback(
+                job=job,
                 reason_code=ReasonCode.RESPONSE_VALIDATION_FAILED,
                 risk_level=RiskLevel.UNKNOWN,
                 topic_code=topic_code,
@@ -290,6 +252,33 @@ class TicketPipeline:
                 used_article_ids=output.used_article_ids,
             ),
             response_ref=response_ref,
+        )
+
+    def _generation_fallback(
+        self,
+        *,
+        job: GenerationJob,
+        reason_code: ReasonCode,
+        risk_level: RiskLevel,
+        topic_code: TopicCode | None,
+    ) -> TicketOutcome:
+        self.audit.append_decision(
+            run_id=job.run_id,
+            stage="generation",
+            action=Action.HUMAN_REVIEW,
+            reason_code=reason_code,
+            attempt=job.attempt,
+        )
+        self._trace(
+            "DECISION",
+            f"{Action.HUMAN_REVIEW.value}: {reason_code.value}",
+        )
+        return _human_outcome(
+            run_id=job.run_id,
+            ticket_id=job.ticket_id,
+            reason_code=reason_code,
+            risk_level=risk_level,
+            topic_code=topic_code,
         )
 
     def process_ticket(self, ticket: Ticket) -> TicketOutcome:
