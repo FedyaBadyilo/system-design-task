@@ -1,0 +1,80 @@
+<mxfile host="Electron">
+  <diagram name="Страница-1" id="fTH9bLUHHieo8oZWh3kh">
+    <mxGraphModel dx="2054" dy="1209" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-3" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Тикет (чат, email и т..д.)" vertex="1">
+          <mxGeometry height="60" width="120" x="365" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-5" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Слой&amp;nbsp; унификации" vertex="1">
+          <mxGeometry height="140" width="310" x="280" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-7" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-8" connectable="0" parent="YfNLSY6OvkXcy4JazuOi-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Содержит перс данные" vertex="1">
+          <mxGeometry relative="1" x="0.4713" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-12" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-13" connectable="0" parent="YfNLSY6OvkXcy4JazuOi-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Не содержит перс данные" vertex="1">
+          <mxGeometry relative="1" x="-0.1018" y="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Слой быстрых базовых проверок:&lt;br&gt;&lt;ul&gt;&lt;li&gt;policy&lt;/li&gt;&lt;li&gt;тема обращения (быстрый классификатор)&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="140" width="310" x="270" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Оператор" vertex="1">
+          <mxGeometry height="50" width="190" x="10" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-15" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-16" connectable="0" parent="YfNLSY6OvkXcy4JazuOi-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Высокая уверенность в найденном контексте" vertex="1">
+          <mxGeometry relative="1" x="-0.1135" y="-4" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-20" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="YfNLSY6OvkXcy4JazuOi-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-21" connectable="0" parent="YfNLSY6OvkXcy4JazuOi-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Обращается" vertex="1">
+          <mxGeometry relative="1" x="-0.15" y="2" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Hybrid search по темам и запросу" vertex="1">
+          <mxGeometry height="85" width="310" x="460" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-14" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="LLM- ответ по контексту" vertex="1">
+          <mxGeometry height="60" width="120" x="555" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-17" edge="1" parent="1" source="YfNLSY6OvkXcy4JazuOi-11" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="YfNLSY6OvkXcy4JazuOi-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="660" as="sourcePoint" />
+            <mxPoint x="450" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-18" connectable="0" parent="YfNLSY6OvkXcy4JazuOi-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Низкая уверенность в найденном контекссте" vertex="1">
+          <mxGeometry relative="1" x="-0.2699" y="4" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YfNLSY6OvkXcy4JazuOi-19" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="База знаний" vertex="1">
+          <mxGeometry height="130" width="90" x="890" y="562.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
